@@ -17,7 +17,11 @@ public class ProdutoDao {
             stmt.setFloat(3, p.getPrice());
             stmt.setInt(4, p.getStock());
             stmt.setString(5, p.getUrl_image());
-            stmt.setInt(6, p.getId_categoria());
+            
+            if(p.getCategoria() != null){
+                stmt.setInt(6, p.getCategoria().getId());
+            }
+
             stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -27,6 +31,7 @@ public class ProdutoDao {
     public List<Produto> listar() {
         List<Produto> lista = new ArrayList<>();
         String sql = "SELECT * FROM Produto";
+        CategoriaDao cd = new CategoriaDao();
         
        try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
@@ -39,7 +44,7 @@ public class ProdutoDao {
                p.setPrice(rs.getFloat("price"));
                p.setStock(rs.getInt("stock"));
                p.setUrl_image(rs.getString("url_image"));
-               p.setId_categoria(rs.getInt("id_categoria"));
+               p.setCategoria(cd.buscar(rs.getInt("id_categoria")));
                lista.add(p);
            }
        } catch (Exception e) {

@@ -53,4 +53,26 @@ public class CategoriaDao {
          }
     }
     
+    public Categoria buscar(int id) {
+        String sql = "SELECT * FROM Categoria WHERE id=?";
+        Categoria c = new Categoria();
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             stmt.setInt(1, id);
+             ResultSet rs = stmt.executeQuery();
+             
+             while(rs.next()){
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setDescription(rs.getString("description"));     
+             }
+             
+             
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+        return c;
+    }
 }
+    
+

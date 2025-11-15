@@ -12,19 +12,19 @@ public class Produto {
      private float price;
      private int stock;
      private String url_image;
-     private int id_categoria;
+     private Categoria categoria;
 
     public Produto() {
     }
 
-    public Produto(int id, String name, String description, float price, int stock, String url_image, int id_categoria) {
+    public Produto(int id, String name, String description, float price, int stock, String url_image, Categoria categoria) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
         this.url_image = url_image;
-        this.id_categoria = id_categoria;
+        this.categoria = categoria;
     }
 
     public int getId() {
@@ -75,12 +75,14 @@ public class Produto {
         this.url_image = url_image;
     }
 
-    public int getId_categoria() {
-        return id_categoria;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setId_categoria(int id_categoria) {
-        this.id_categoria = id_categoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
+
+    
     
 }

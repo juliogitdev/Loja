@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import br.com.loja.model.Categoria;
+import br.com.loja.dao.CategoriaDao;
+
 /**
  * Servlet implementation class CategoriaServlet
  */
-@WebServlet("/categoria")
+@WebServlet("/categorias")
 public class CategoriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +29,7 @@ public class CategoriaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("/categoria/categoria.jsp").forward(request, response);
 	}
 
 	/**
@@ -34,7 +37,20 @@ public class CategoriaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String nameCategoria = request.getParameter("name");
+		String descriptionCategoria = request.getParameter("description");
+
+        Categoria c = new Categoria();
+        CategoriaDao cd = new CategoriaDao();
+        
+        c.setName(nameCategoria);
+        c.setDescription(descriptionCategoria);
+        
+        cd.inserir(c);
+
+		request.setAttribute("categoria", nameCategoria);
+		
+		request.getRequestDispatcher("/categoria/categoria.jsp").forward(request, response);
 	}
 
 }
